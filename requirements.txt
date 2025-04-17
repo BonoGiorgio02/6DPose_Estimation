@@ -1,0 +1,11 @@
+torch
+torchvision
+torchaudio
+matplotlib
+seaborn
+scikit-learn
+pyyaml
+plotly
+open3d
+pcl
+Pillow
