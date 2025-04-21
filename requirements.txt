@@ -9,3 +9,5 @@ plotly
 open3d
 pcl
 Pillow
+tqdm
+ultralytics
