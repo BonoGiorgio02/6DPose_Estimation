@@ -1,2 +1,4 @@
 datasets/linemod/*
 checkpoints/yolo11n.pt
+*.csv
+*.png
