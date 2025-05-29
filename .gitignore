@@ -2,3 +2,4 @@ datasets/linemod/*
 checkpoints/yolo11n.pt
 *.csv
 *.png
+*__pycache__

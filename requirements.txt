@@ -1,6 +1,4 @@
-torch
-torchvision
-torchaudio
+torch-geometric
 matplotlib
 seaborn
 scikit-learn
@@ -11,3 +9,6 @@ pcl
 Pillow
 tqdm
 ultralytics
+numpy-quaternion
+trimesh
+wandb
