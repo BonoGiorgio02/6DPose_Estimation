@@ -12,3 +12,4 @@ ultralytics
 numpy-quaternion
 trimesh
 wandb
+comet-ml
