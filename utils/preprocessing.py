@@ -95,12 +95,7 @@ def create_YOLO_yaml(path, folder_names):
     names += "]"
 
     # create data.yaml (as class names use ids of the folder)
-    content = f"""train: ./train/images
-    val: ./val/images
-    test: ./test/images
-
-    nc: {number_classes}
-    names: {names}"""
+    content = f"""train: ./train/images\nval: ./val/images\ntest: ./test/images\n\nnc: {number_classes}\nnames: {names}"""
     # write to file
     with open(f"{path}/datasets/linemod/YOLO/datasets/data.yaml", "w") as fout:
         fout.write(content)

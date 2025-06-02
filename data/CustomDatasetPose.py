@@ -110,22 +110,28 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         """
             Given dataset root and training samples in the format (folder_id, sample_id), compute mean and standard deviation
         """
-        mean = [0, 0, 0]
-        std = [0, 0, 0]
-        n_images = 0
+
+        # Transform to tensor [C, H, W]
+        to_tensor = transforms.ToTensor()
+
+        # initialize sum
+        sum_rgb = torch.zeros(3)
+        sum_sq_rgb = torch.zeros(3)
+        n_pixels = 0
 
         for el in train_samples:
             # get image
             image_path = os.path.join(self.dataset_root, 'data', f"{el[0]:02d}", "rgb", f"{el[1]:04d}.png")
-            # normalize to values [0,1], img is a numpy ndarray with shape (480,640,3)
-            img = cv2.imread(image_path).astype(np.float32) / 255.0
-            if img is not None:
-                n_images += 1
-                mean += img.mean(axis=(0,1))
-                std += img.std(axis=(0,1))
+            img = Image.open(image_path).convert('RGB') # ensure channel order is RGB
+            img_tensor = to_tensor(img)  # shape: [3, H, W]
+            # add
+            sum_rgb += img_tensor.sum(dim=[1, 2]) # sum over H and W, so for each channel a value
+            sum_sq_rgb += (img_tensor ** 2).sum(dim=[1, 2])
+            n_pixels += img_tensor.shape[1] * img_tensor.shape[2]
         
-        mean = mean/n_images
-        std = std/n_images
+        # compute mean
+        mean = sum_rgb / n_pixels
+        std = torch.sqrt((sum_sq_rgb / n_pixels) - (mean ** 2))
 
         return mean, std
     
@@ -190,6 +196,15 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         """
         Convert pixel coordinates + depth to 3D metric coordinates using intrinsic parameters.
         Returns x, y, z as Nx3 array.
+
+        Convert pixel coordinate + depth to 3D metric coordinates using camera intrinsics
+
+        Convertion equation:
+        X = (u - cx) * Z / fx
+        Y = (v - cy) * Z / fy
+        Z = depth
+
+        where (u,v) are pixel coordinates and Z depth
         """
         fx, fy, cx, cy = self.camera_intrinsics
         height, width = masked_depth.shape
