@@ -157,7 +157,7 @@ class ADDMetric:
             avg_distance = torch.mean(distances)
 
             # Check if the prediction is correct
-            is_correct = 1.0 if avg_distance < (threshold * self.objects_info[int(object_id)]["diameter"]) else 0.0
+            is_correct = 1.0 if avg_distance < (threshold * self.objects_info[int(object_id)]["diameter"]/1000) else 0.0
 
             return avg_distance, is_correct
 
