@@ -2,6 +2,7 @@ import os
 import yaml
 import shutil
 import quaternion
+import torch
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -59,9 +60,17 @@ def quaternion_gt(input_path=None):
                     modified_poses = []
 
                     for pose in value:
-                        quat= quaternion.from_rotation_matrix(np.array(pose["cam_R_m2c"]).reshape(3,3))
-                        pose["quaternion"]= [quat.w, quat.x, quat.y, quat.z]
-                        modified_poses.append(pose) # add quaternion information in ground truth
+                        quat_obj = quaternion.from_rotation_matrix(np.array(pose["cam_R_m2c"]).reshape(3,3))
+                        quat_array = np.array([quat_obj.w, quat_obj.x, quat_obj.y, quat_obj.z], dtype=np.float32)
+                        # convert array to tensor
+                        quat = torch.tensor(quat_array)
+
+                        # normalize quaternion
+                        quat = quat / torch.norm(quat, dim=-1, keepdim=True)
+                        # store the quaternion components as a list in the dictionary
+                        pose["quaternion"]= quat.tolist() # Use .item() to get scalar values
+                        modified_poses.append(pose)
+                        
                     modified_data[key] = modified_poses
 
                 output_file = os.path.join(input_path, gt.name)

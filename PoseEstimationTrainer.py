@@ -45,7 +45,6 @@ class PoseEstimationTrainer:
 
         self.experiment = experiment
 
-
     def train_epoch(self):
         """Train the model for one epoch.
 
@@ -135,7 +134,7 @@ class PoseEstimationTrainer:
                 # Forward pass
                 pred_trans, pred_rot = self.model(images)
 
-                # Calcola loss
+                # compute loss
                 loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot)
 
                 total_loss += loss.item()

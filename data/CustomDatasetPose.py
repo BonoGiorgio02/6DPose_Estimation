@@ -12,13 +12,17 @@ IMG_WIDTH = 640
 IMG_HEIGHT = 480
 
 class CustomDatasetPose(Dataset): # used to load and preprocess data
-    def __init__(self, dataset_root, split='train', train_ratio=0.7, seed=42, device=torch.device("cpu"), cam_K=None):
+    def __init__(self, dataset_root, split='train', train_ratio=0.7, seed=42, device=torch.device("cpu"), cam_K=None, img_mean=None, img_std=None):
         """
         Args:
             dataset_root (str): Path to the dataset directory.
             split (str): 'train', 'validation' or 'test'.
             train_ratio (float): Percentage of data used for training (default 70%).
             seed (int): Random seed for reproducibility.
+            device
+            camera intrinsics
+            image mean
+            image standard deviation
         """
         self.dataset_root = dataset_root
         self.split = split
@@ -52,8 +56,14 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         else:
             self.samples = self.test_samples
 
-        # find mean and standard deviation of images
-        mean, std = self.findMeanStd(self.train_samples)
+        # find mean and standard deviation of images, if not given as parameter
+        if (img_mean is not None and img_std is not None):
+            self.image_mean = img_mean
+            self.image_std = img_std
+        else:
+            mean, std = self.findMeanStd(self.train_samples)
+            self.image_mean = mean.tolist()
+            self.image_std = std.tolist()
 
         # Define image transformations for the baseline
         if self.split == 'train':
@@ -62,7 +72,7 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
                                 # transforms.RandomGrayscale(p=0.1),
                                 # transforms.RandomApply([transforms.GaussianBlur(kernel_size=3)], p=0.1),
                                 transforms.ToTensor(),  # convert to float32 and normalize to [0, 1]
-                                # transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+                                # transforms.Normalize(mean=self.image_mean, std=self.image_std)
                             ])
 
             self.transform_crop = transforms.Compose([
@@ -72,18 +82,18 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
                                 transforms.Resize((224, 224)), # such that all images of the batch have same shape
                                 transforms.ToTensor(),
                                 # normalize images according to these values found
-                                transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+                                transforms.Normalize(mean=self.image_mean, std=self.image_std)
                             ])
         else:
             self.transform_img = transforms.Compose([
                                 transforms.ToTensor(),
-                                # transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+                                # transforms.Normalize(mean=self.image_mean, std=self.image_std)
                             ])
 
             self.transform_crop = transforms.Compose([
                                 transforms.Resize((224, 224)),
                                 transforms.ToTensor(),
-                                transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+                                transforms.Normalize(mean=self.image_mean, std=self.image_std)
                             ])
 
         # store everything instead of opening each time file, this can speed up computation
@@ -134,6 +144,9 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         std = torch.sqrt((sum_sq_rgb / n_pixels) - (mean ** 2))
 
         return mean, std
+    
+    def get_image_mean_std(self):
+        return self.image_mean, self.image_std
     
     def extract_ground_truth(self):
         ground_truth = {}

@@ -3,6 +3,7 @@ import torch
 import trimesh
 import quaternion
 import numpy as np
+import matplotlib.pyplot as plt
 
 def plotPose(pathImage, translation_gt, rotation_gt, translation_pred, rotation_pred, experiment, camera_intrinsics, device=torch.device("cpu")):
     '''
@@ -122,7 +123,7 @@ def plotPose(pathImage, translation_gt, rotation_gt, translation_pred, rotation_
 
     overlapImage = cv2.addWeighted(transparent_image, 0.5, image, 1, 0)
     img = cv2.cvtColor(overlapImage, cv2.COLOR_BGR2RGB)
-    # plt.imshow(img)
+    plt.imshow(img)
     experiment.log_image(image_data=img, name= f"{label}_{image_id}")
-    # plt.title("Object Pose Estimation (prediction is transparent)")
-    # plt.show()
+    plt.title("Object Pose Estimation (prediction is transparent)")
+    plt.show()
