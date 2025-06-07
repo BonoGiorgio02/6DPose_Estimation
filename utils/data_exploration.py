@@ -91,6 +91,50 @@ def get_class_names():
             folder_names.append(folder_id)
     return folder_names
 
+def compare_rgb_mask_in_data(root, extensions={'.png', '.jpg', '.jpeg', '.bmp'}):
+    """
+    For each class in "root", compare files in folders "rgb" and "mask"
+    Print files that are only in one of the folders
+
+    Args:
+        root (str): main path (f.i. "data/")
+        extensions (set): file format to consider
+    """
+    classes = sorted(os.listdir(root))
+    only_rgb= 0
+    only_mask=0
+    print(classes)
+
+    for class_name in classes:
+        class_path = os.path.join(root, class_name)
+        rgb_path = os.path.join(class_path, 'rgb')
+        mask_path = os.path.join(class_path, 'mask')
+
+        if not os.path.isdir(rgb_path) or not os.path.isdir(mask_path):
+            print(f"No rgb or mask folder in '{class_name}'")
+            continue
+
+        rgb_files = {f for f in os.listdir(rgb_path) if os.path.splitext(f)[1].lower() in extensions}
+        mask_files = {f for f in os.listdir(mask_path) if os.path.splitext(f)[1].lower() in extensions}
+
+        only_in_rgb = sorted(rgb_files - mask_files)
+        only_in_mask = sorted(mask_files - rgb_files)
+
+        if only_in_rgb:
+            print(f"\nClass '{class_name}' — only in *rgb*:")
+            for f in only_in_rgb:
+                print(f"  {f}")
+                only_rgb+=1
+
+        if only_in_mask:
+            print(f"\nClass '{class_name}' — only in *mask*:")
+            for f in only_in_mask:
+                print(f"  {f}")
+                only_mask+=1
+
+    print(f"Total files only in rgb: {only_rgb}")
+    print(f"Total files only in mask: {only_mask}")
+
 def load_dataset_distribution(counter_df, index_dict, number_classes):
     # plot distribution of labels in training, validation and test set
     fig, axes = plt.subplots(1,3,figsize=(15,6),sharey=True)
