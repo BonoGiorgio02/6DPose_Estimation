@@ -11,7 +11,7 @@ class ADDMetric:
         returns the average distance between the predicted pose and the ground truth pose.
     """
 
-    def __init__(self, model, class_names, test_loader, models_3D_dir, symmetric_objects=None, device='cpu', experiment=None, config=None):
+    def __init__(self, model, class_names, test_loader, models_3D_dir, symmetric_objects=None, device=torch.device("cpu"), experiment=None, config=None):
         """
         Args:
             model (torch model): model to evaluate

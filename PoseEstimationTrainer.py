@@ -11,14 +11,14 @@ class PoseEstimationTrainer:
     """Trainer class for the Pose Estimation model.
     """
 
-    def __init__(self, model, train_loader, val_loader, device='cuda', config=None, experiment=None):
+    def __init__(self, model, train_loader, val_loader, device=torch.device("cpu"), config=None, experiment=None):
         """
 
         Args:
             model (torch model): Model to be trained
             train_loader (dataloader): train dataloader
             val_loader (dataloader): validation dataloader
-            device (str, optional): cuda or cpu. Defaults to 'cuda'.
+            device (str, optional): cuda or cpu. Defaults to 'cpu'.
             config (dict, optional): configuration file. Defaults to None.
         """
         self.model = model.to(device)
@@ -27,7 +27,7 @@ class PoseEstimationTrainer:
         self.device = device
         self.config = config or {}
 
-        # Loss function and optimizer
+        # loss function and optimizer
         self.criterion = PoseLoss(alpha=1.0, beta=1.0)
         self.optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
         # self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max= config['num_epochs'], eta_min=1e-6)
@@ -38,10 +38,6 @@ class PoseEstimationTrainer:
         self.val_losses = []
         self.best_val_loss = float('inf')
         self.step = 0
-
-        # # Log model architecture to wandb
-        # if wandb.run is not None:
-        #     wandb.watch(self.model, log="all", log_freq=50)
 
         self.experiment = experiment
 
@@ -66,14 +62,14 @@ class PoseEstimationTrainer:
             gt_trans = batch['translation']
             gt_rot = batch['quaternion'] # ['quaternion'] for quaternion ['rotation']
 
-            # Forward pass
+            # forward pass
             self.optimizer.zero_grad()
             pred_trans, pred_rot = self.model(images)
 
-            # Compute  loss
+            # compute loss
             loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot)
 
-            # Backward pass
+            # backward pass
             loss.backward()
             # limit large gradient
             torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
@@ -84,7 +80,7 @@ class PoseEstimationTrainer:
             total_trans_loss += trans_loss.item()
             total_rot_loss += rot_loss.item()
 
-            # Log batch metrics
+            # log batch metrics
             if batch_idx %20 ==0:
 
                 self.experiment.log_metrics({
@@ -97,7 +93,7 @@ class PoseEstimationTrainer:
 
             self.step += 1
 
-            # Update progress bar
+            # update progress bar
             pbar.set_postfix({
                 'Loss': f'{loss.item():.4f}',
                 'Trans': f'{trans_loss.item():.4f}',
@@ -131,7 +127,7 @@ class PoseEstimationTrainer:
                 gt_trans = batch['translation']
                 gt_rot = batch['quaternion'] # ['quaternion'] for quaternion ['rotation']
 
-                # Forward pass
+                # forward pass
                 pred_trans, pred_rot = self.model(images)
 
                 # compute loss
@@ -162,20 +158,20 @@ class PoseEstimationTrainer:
         for epoch in range(num_epochs):
             print(f'\nEpoch {epoch+1}/{num_epochs}')
 
-            # Training
+            # training
             train_loss, train_trans_loss, train_rot_loss = self.train_epoch()
 
-            # Validation
+            # validation
             val_loss, val_trans_loss, val_rot_loss = self.validate()
 
-            # Scheduler step
+            # scheduler step
             self.scheduler.step()
 
-            # Save metrics
+            # save metrics
             self.train_losses.append(train_loss)
             self.val_losses.append(val_loss)
 
-            # Log epoch metrics
+            # log epoch metrics
             if self.experiment is not None:
                 self.experiment.log_metrics({
                     "epoch": epoch + 1,
@@ -190,7 +186,7 @@ class PoseEstimationTrainer:
             print(f'Train Loss: {train_loss:.4f} (Trans: {train_trans_loss:.4f}, Rot: {train_rot_loss:.4f})')
             print(f'Val Loss: {val_loss:.4f} (Trans: {val_trans_loss:.4f}, Rot: {val_rot_loss:.4f})')
 
-            # Save best model
+            # save best model
             if val_loss < self.best_val_loss:
                 self.best_val_loss = val_loss
 
@@ -203,7 +199,7 @@ class PoseEstimationTrainer:
                     f"_bs{batch_size}.pth"
                 )
 
-                # Save the model
+                # save the model
                 torch.save({
                     'epoch': epoch+1,
                     'model_state_dict': self.model.state_dict(),
@@ -213,7 +209,7 @@ class PoseEstimationTrainer:
                     'config': self.config
                 }, best_model_path)
 
-                # Log model
+                # log model
                 if self.experiment is not None:
                     self.experiment.log_metric("best_val_loss", val_loss)
 
@@ -235,7 +231,7 @@ class PoseEstimationTrainer:
         plt.legend()
         plt.grid(True)
 
-        # Log plot
+        # log plot
         if self.experiment is not None:
             self.experiment.log_image(image_data= plt, name= "Plot losses")
 

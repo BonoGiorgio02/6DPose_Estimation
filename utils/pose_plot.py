@@ -124,6 +124,7 @@ def plotPose(pathImage, translation_gt, rotation_gt, translation_pred, rotation_
     overlapImage = cv2.addWeighted(transparent_image, 0.5, image, 1, 0)
     img = cv2.cvtColor(overlapImage, cv2.COLOR_BGR2RGB)
     plt.imshow(img)
-    experiment.log_image(image_data=img, name= f"{label}_{image_id}")
+    if experiment is not None:
+        experiment.log_image(image_data=img, name= f"{label}_{image_id}")
     plt.title("Object Pose Estimation (prediction is transparent)")
     plt.show()
