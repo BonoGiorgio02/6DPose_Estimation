@@ -32,7 +32,7 @@ class ADDMetricExtension:
         self.dict_diameters = self.load_diameters()
         self.experiment = experiment
         self.config = config
-        self.criterion = PoseLossExtension()
+        self.criterion = PoseLossExtension(class_names=class_names, device=self.device)
     
     def load_diameters(self):
         dict_diameters = {}

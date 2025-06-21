@@ -29,6 +29,22 @@ class GeometricFeatureExtractor(nn.Module):
             in_channels=feature_dims[1], out_channels=feature_dims[2]
         )
 
+        self.feat_proj1 = nn.Sequential(
+            nn.Linear(feature_dims[0], feature_dims[0]),
+            nn.BatchNorm1d(feature_dims[0]),
+            nn.ReLU(inplace=True)
+        )
+        self.feat_proj2 = nn.Sequential(
+            nn.Linear(feature_dims[1], feature_dims[1]),
+            nn.BatchNorm1d(feature_dims[1]),
+            nn.ReLU(inplace=True)
+        )
+        self.feat_proj3 = nn.Sequential(
+            nn.Linear(feature_dims[2], feature_dims[2]),
+            nn.BatchNorm1d(feature_dims[2]),
+            nn.ReLU(inplace=True)
+        )
+
     def upsampling_features(self, pos, h, edge_index):
         # pos [B*N, 3], h [M, C], edge:index [2, E]
 

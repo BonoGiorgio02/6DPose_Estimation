@@ -103,7 +103,7 @@ class PixelWiseFusionNetwork(nn.Module):
             valid_pixels = valid_pixels[indices]
 
             if len(valid_points) == 0:
-                print(f"[DEBUG] No valid points for batch {b}")
+                print(f"[DEBUG] No valid points for image {b} of batch")
                 continue
 
             img_feats = image_features[b]  # [C, H, W]

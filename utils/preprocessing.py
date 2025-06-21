@@ -150,3 +150,5 @@ def create_dataset_YOLO(number_classes, train_samples, validation_samples, test_
         # store in the dataframe
         values = pd.array(list(classCount.values()))/total
         counter_df[folder_names[idx]] = values.copy()
+    
+    return counter_df

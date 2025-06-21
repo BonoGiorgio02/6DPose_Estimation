@@ -83,13 +83,14 @@ class PoseEstimationTrainer:
             # log batch metrics
             if batch_idx %20 ==0:
 
-                self.experiment.log_metrics({
-                    "batch_loss": loss.item(),
-                    "batch_trans_loss": trans_loss.item(),
-                    "batch_rot_loss": rot_loss.item(),
-                    "learning_rate": self.optimizer.param_groups[0]['lr'],
-                    "step": self.step
-                })
+                if self.experiment is not None:
+                    self.experiment.log_metrics({
+                        "batch_loss": loss.item(),
+                        "batch_trans_loss": trans_loss.item(),
+                        "batch_rot_loss": rot_loss.item(),
+                        "learning_rate": self.optimizer.param_groups[0]['lr'],
+                        "step": self.step
+                    })
 
             self.step += 1
 

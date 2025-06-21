@@ -11,7 +11,7 @@ import torchvision.transforms as transforms
 IMG_WIDTH = 640
 IMG_HEIGHT = 480
 
-class CustomDatasetPose(Dataset): # used to load and preprocess data
+class CustomDataset(Dataset): # used to load and preprocess data
     def __init__(self, dataset_root, split='train', train_ratio=0.7, seed=42, device=torch.device("cpu"), cam_K=None, img_mean=None, img_std=None):
         """
         Args:
@@ -29,7 +29,7 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         self.train_ratio = train_ratio
         self.seed = seed
         self.device = device
-        self.camera_intrinsics = [cam_K[0], cam_K[4], cam_K[2], cam_K[5]]
+        self.camera_intrinsics = torch.tensor([cam_K[0], cam_K[4], cam_K[2], cam_K[5]]).to(device)
 
         # Get list of all samples (folder_id, sample_id)
         self.samples, self.folder_names = self.get_all_samples()
@@ -235,7 +235,7 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         y_meters = (v_valid - cy) * z_valid / fy
         z_meters = z_valid
 
-        pointcloud = np.stack([x_meters, y_meters, z_meters], axis=-1).reshape(-1, 3)  # Shape: (N, 3)
+        pointcloud = torch.stack([x_meters, y_meters, z_meters], axis=-1).reshape(-1, 3)  # Shape: (N, 3)
         return pointcloud
 
     def load_6d_pose(self, folder_id: int = None, sample_id: int = None):

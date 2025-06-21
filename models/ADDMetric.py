@@ -67,7 +67,7 @@ class ADDMetric:
                     if len(points) == 0:
                         print(f"No valid points found for object {obj_id}")
                         continue
-                    model_points_dict[f"{obj_id:02d}"] = points
+                    model_points_dict[f"{obj_id}"] = points
 
                 except Exception as e:
                     print(f"Error loading model {model_path}: {e}")
