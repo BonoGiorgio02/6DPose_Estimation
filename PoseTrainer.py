@@ -1,6 +1,5 @@
 import torch
 import os
-from torch.optim import Adam
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import comet_ml
@@ -12,7 +11,7 @@ class PoseTrainer:
     """Trainer class for the Pose Estimation model.
     """
 
-    def __init__(self, model, class_names, train_loader, val_loader, device=torch.device("cpu"), config=None, experiment=None):
+    def __init__(self, model, class_names, train_loader, val_loader, device=torch.device("cpu"), config=None, experiment=None, resume_optimizer=False, checkpoint=None):
         """
 
         Args:
@@ -28,18 +27,28 @@ class PoseTrainer:
         self.val_loader = val_loader
         self.device = device
         self.config = config or {}
+        self.start_epoch = 0
 
         # loss function and optimizer
         self.criterion = PoseLossExtension(alpha=1.0, beta=1.0, class_names=self.class_names)
-        self.optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
-        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max= config['num_epochs'], eta_min=1e-6)
+        self.optimizer = torch.optim.AdamW(model.parameters(), lr=4.0e-05, weight_decay=1e-5)
+        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max=17, eta_min=1e-6)
         # self.grad_accum_steps = self.config.get('grad_accum_steps', 8)
+
+        if resume_optimizer and checkpoint is not None:
+            self.model.load_state_dict(checkpoint['model_state_dict'])
+            # self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            self.start_epoch = checkpoint.get('epoch', 0)
+            self.best_val_loss = checkpoint.get('val_loss', float('inf'))
+            # self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+            self.step = checkpoint.get('step', 0)
+        else:
+            self.best_val_loss = float('inf')
+            self.step = 0
 
         # log metrics
         self.train_losses = []
         self.val_losses = []
-        self.best_val_loss = float('inf')
-        self.step = 0
         self.experiment = experiment
         self.num_batches = len(self.train_loader)
 
@@ -222,7 +231,10 @@ class PoseTrainer:
                     'optimizer_state_dict': self.optimizer.state_dict(),
                     'train_loss': train_loss,
                     'val_loss': val_loss,
-                    'config': self.config
+                    'config': self.config,
+                    'scheduler_state_dict':self.scheduler.state_dict(),
+                    'lr': lr,
+                    'step': self.step
                 }, best_model_path)
 
                 # log model
