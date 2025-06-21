@@ -24,7 +24,7 @@ def load_models_points(models_dir, class_names, device=torch.device("cpu")):
                 # extract points from surface or use vertices
                 if hasattr(mesh, 'vertices') and mesh.vertices is not None:
                     points = torch.tensor(mesh.vertices/1000.0, dtype=torch.float32).to(device)
-                    sample_points = fps(points, None, ratio=301/points.size(0), random_start=False)[:300]
+                    sample_points = fps(points, None, ratio=1001/points.size(0), random_start=False)[:1000]
                     points = points[sample_points]
                 else:
                     continue

@@ -1,7 +1,4 @@
 import torch
-import os
-import trimesh
-import torch.nn.functional as F
 from torch import nn
 from utils.models_point_loader import load_models_points
 
@@ -48,15 +45,15 @@ class PoseLossExtension(nn.Module):
         models_point = torch.stack([self.models_dict[f"{obj:02d}"] for obj in obj_id]).unsqueeze(1)
 
         # convert pred_r to rotation matrix
-        pred_base = torch.cat(((1.0 - 2.0*(pred_r[:, :, 2]*2 + pred_r[:, :, 3]*2)).view(bs, num_p, 1),\
-                                (2.0*pred_r[:, :, 1]*pred_r[:, :, 2] - 2.0*pred_r[:, :, 0]*pred_r[:, :, 3]).view(bs, num_p, 1), \
-                                (2.0*pred_r[:, :, 0]*pred_r[:, :, 2] + 2.0*pred_r[:, :, 1]*pred_r[:, :, 3]).view(bs, num_p, 1), \
-                                (2.0*pred_r[:, :, 1]*pred_r[:, :, 2] + 2.0*pred_r[:, :, 3]*pred_r[:, :, 0]).view(bs, num_p, 1), \
-                                (1.0 - 2.0*(pred_r[:, :, 1]*2 + pred_r[:, :, 3]*2)).view(bs, num_p, 1), \
-                                (-2.0*pred_r[:, :, 0]*pred_r[:, :, 1] + 2.0*pred_r[:, :, 2]*pred_r[:, :, 3]).view(bs, num_p, 1), \
-                                (-2.0*pred_r[:, :, 0]*pred_r[:, :, 2] + 2.0*pred_r[:, :, 1]*pred_r[:, :, 3]).view(bs, num_p, 1), \
-                                (2.0*pred_r[:, :, 0]*pred_r[:, :, 1] + 2.0*pred_r[:, :, 2]*pred_r[:, :, 3]).view(bs, num_p, 1), \
-                                (1.0 - 2.0*(pred_r[:, :, 1]*2 + pred_r[:, :, 2]*2)).view(bs, num_p, 1)), dim=2).view(bs * num_p, 3, 3)
+        pred_base = torch.cat(((1.0 - 2.0*(pred_r[:, :, 2]**2 + pred_r[:, :, 3]**2)).view(bs, num_p, 1),\
+                      (2.0*pred_r[:, :, 1]*pred_r[:, :, 2] - 2.0*pred_r[:, :, 0]*pred_r[:, :, 3]).view(bs, num_p, 1), \
+                      (2.0*pred_r[:, :, 0]*pred_r[:, :, 2] + 2.0*pred_r[:, :, 1]*pred_r[:, :, 3]).view(bs, num_p, 1), \
+                      (2.0*pred_r[:, :, 1]*pred_r[:, :, 2] + 2.0*pred_r[:, :, 3]*pred_r[:, :, 0]).view(bs, num_p, 1), \
+                      (1.0 - 2.0*(pred_r[:, :, 1]**2 + pred_r[:, :, 3]**2)).view(bs, num_p, 1), \
+                      (-2.0*pred_r[:, :, 0]*pred_r[:, :, 1] + 2.0*pred_r[:, :, 2]*pred_r[:, :, 3]).view(bs, num_p, 1), \
+                      (-2.0*pred_r[:, :, 0]*pred_r[:, :, 2] + 2.0*pred_r[:, :, 1]*pred_r[:, :, 3]).view(bs, num_p, 1), \
+                      (2.0*pred_r[:, :, 0]*pred_r[:, :, 1] + 2.0*pred_r[:, :, 2]*pred_r[:, :, 3]).view(bs, num_p, 1), \
+                      (1.0 - 2.0*(pred_r[:, :, 1]**2 + pred_r[:, :, 2]**2)).view(bs, num_p, 1)), dim=2).contiguous().view(bs * num_p, 3, 3)
         
         # unsqueeze(1) ([batch_size, 1, 3, 3]), repeat(1, N_valid, 1, 1) ([batch_size, N_valid, 3, 3])
         gt_rot = gt_rot.unsqueeze(1).repeat(1, num_p, 1, 1).view(bs * num_p, 3, 3)

@@ -4,7 +4,6 @@ import shutil
 import quaternion
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm
 

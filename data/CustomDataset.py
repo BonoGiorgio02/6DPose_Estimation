@@ -275,6 +275,8 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         masked_depth = np.where(mask_binary, depth, 0) # apply binary mask to a depth image
 
         pointcloud = self.depth_to_pointcloud(masked_depth)
+        sample_points = torch.randperm(pointcloud.size(0))[:800]
+        pointcloud = pointcloud[sample_points]
 
         cropped_img, translation, rotation, quaternion, bbox_base, obj_id = self.load_6d_pose(folder_id, sample_id)
 

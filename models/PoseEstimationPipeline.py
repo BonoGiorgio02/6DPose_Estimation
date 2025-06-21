@@ -71,7 +71,6 @@ class PoseEstimationPipeline(nn.Module):
             translation
             confidence
         """
-        B, _, H, W = batch_data['cropped_img'].shape
         # extract pixel-wise feature fuse
         pixel_features = self.fusion_network(batch_data)    # [B, 704, N_valid]
 

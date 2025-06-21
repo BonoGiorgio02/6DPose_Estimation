@@ -6,7 +6,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from typing import Tuple
-import itertools
 from data.CustomDatasetPose import IMG_WIDTH, IMG_HEIGHT
 
 def load_image(label: int, object: int):
@@ -121,13 +120,13 @@ def compare_rgb_mask_in_data(root, extensions={'.png', '.jpg', '.jpeg', '.bmp'})
         only_in_mask = sorted(mask_files - rgb_files)
 
         if only_in_rgb:
-            print(f"\nClass '{class_name}' — only in *rgb*:")
+            print(f"\nClass '{class_name}' — only in rgb:")
             for f in only_in_rgb:
                 print(f"  {f}")
                 only_rgb+=1
 
         if only_in_mask:
-            print(f"\nClass '{class_name}' — only in *mask*:")
+            print(f"\nClass '{class_name}' — only in mask:")
             for f in only_in_mask:
                 print(f"  {f}")
                 only_mask+=1
