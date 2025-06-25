@@ -38,7 +38,7 @@ The repository is structured such that:
 
 
 
-#### Risultati di Valutazione
+#### Evaluation results
 
 **Overall:**
 
@@ -47,7 +47,7 @@ The repository is structured such that:
 | ADD Score       | 0.0138  |
 | Accuracy        | 0.8003  |
 
-**Risultati per oggetto:**
+**Results by object:**
 
 | Oggetto  | ADD Score | Accuracy | Numero Campioni |
 |----------|-----------|----------|-----------------|
