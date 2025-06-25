@@ -19,18 +19,6 @@ class PosePredictorModel(nn.Module):
         self.feature_extractor = FeatureExtractor(backbone)
         feature_dim = self.feature_extractor.get_feature_dim()
 
-        # Fully connected layers for the pose prediction
-        # self.fc_layers = nn.Sequential(
-        #     nn.Linear(feature_dim, hidden_dim//2),
-        #     nn.ReLU(),
-        #     nn.Dropout(0.3),
-        #     nn.Linear(hidden_dim//2, hidden_dim//2),
-        #     nn.ReLU(),
-        #     nn.Dropout(0.3),
-        #     nn.Linear(hidden_dim//2, hidden_dim//4),
-        #     nn.ReLU()
-        # )
-
         self.fc_layers = nn.Sequential(
           nn.Linear(feature_dim, hidden_dim),
           nn.BatchNorm1d(hidden_dim),
@@ -53,8 +41,8 @@ class PosePredictorModel(nn.Module):
         )
 
         # Output heads separate for translation and rotation
-        self.translation_head = nn.Linear(hidden_dim//4, 3) # divide by 2 for ADD of rotation matrix, 4 for quaternion
-        self.rotation_head = nn.Linear(hidden_dim//4, 4)  # divide by 2, 9 rotation matrix; //4, 4 per quaternion
+        self.translation_head = nn.Linear(hidden_dim//4, 3)
+        self.rotation_head = nn.Linear(hidden_dim//4, 4)
 
     def forward(self, x):
         # Extract features
@@ -69,6 +57,6 @@ class PosePredictorModel(nn.Module):
 
         # Reshape rotation matrix in 3x3 shape
         batch_size = rotation_flat.size(0)
-        rotation = rotation_flat.view(batch_size, 4) # 3, 3 for rotation matrix, 4 for quaternion
+        rotation = rotation_flat.view(batch_size, 4)
 
         return translation, rotation

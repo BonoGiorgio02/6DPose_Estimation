@@ -19,7 +19,7 @@ class PointNetLayer(MessagePassing):
         )
 
     def forward(self, h, pos, edge_index):
-        h = h.view(-1, h.size(-1)) # h: [B, 1, N, C] or [B, N, C] -> Flatten to [B*N, C]
+        h = h.view(-1, h.size(-1)) # h: [B, N, C] -> Flatten to [B*N, C]
         pos = pos.view(-1, 3)
         # compute messages from each node j to its neighbour i, then aggregate by using aggr, it calls message() for each edge
         return self.propagate(edge_index, h=h, pos=pos)

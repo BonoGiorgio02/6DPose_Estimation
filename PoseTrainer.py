@@ -78,9 +78,7 @@ class PoseTrainer:
 
             # compute loss (not normalized values)
             loss, r, t= self.criterion(pixel_rotations_norm, pixel_translations, pixel_confidences, gt_trans, gt_rot, obj_id)
-
-            # normalize ONLY for backward (gradient accumulation)
-            # loss_normalized = loss / self.grad_accum_steps
+            
             loss.backward()
 
             # accumulate loss for statistics
