@@ -24,6 +24,12 @@ The repository is structured such that:
 - notebook and associated training logic
 - **requirements** contains necessary packages
 
+
+### Results obtained in LINEMOD dataset
+
+
+
+
 ### Results obtained in autonomous driving dataset
 
 <p align="center">
