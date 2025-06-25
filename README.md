@@ -21,13 +21,23 @@ The repository is structured such that:
 ### Results obtained in autonomous driving dataset
 
 <p align="center">
-  <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="300" style="margin-right: 10px;">
-  <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width="300">
+  <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="450" style="margin-right: 10px;">
+  <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width=450">
 </p>
 
 <p align="center">
   <b>Figure 1:</b> Left camera frame. &nbsp;&nbsp;
   <b>Figure 2:</b> Right camera frame.
+</p>
+
+<p align="center">
+  <img src="images/vimba_038_image_sync_YOLO.jpg" alt="Left camera frame processed by YOLO" width="450" style="margin-right: 10px;">
+  <img src="images/vimba_039_image_sync_YOLO.jpg" alt="Right camera frame processed by YOLO" width=450">
+</p>
+
+<p align="center">
+  <b>Figure 3:</b> Left camera frame processed by YOLO. &nbsp;&nbsp;
+  <b>Figure 2:</b> Right camera frame processed by YOLO.
 </p>
 
 <figure>
