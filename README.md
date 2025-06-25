@@ -50,9 +50,15 @@ The repository is structured such that:
   <b>Figure 6:</b> Cropped image of right cone.
 </p>
 
-![Cropped image of left cone](images/best_cone.jpg)
-![Cropped image of right cone](images/best_cone_039.jpg)
-![LiDAR pointcloud of the cone projected in left image](images/pointcloud_projection_result.png)
-![LiDAR pointcloud of the cone projected in right image](images/pointcloud_projection_result_039.png)
+<p align="center">
+  <img src="images/pointcloud_projection_result.png" alt="LiDAR pointcloud of the cone projected in left image" width="450" style="margin-right: 10px;">
+  <img src="images/pointcloud_projection_result_039.png" alt="LiDAR pointcloud of the cone projected in right image" width=450">
+</p>
+
+<p align="center">
+  <b>Figure 7:</b> LiDAR pointcloud of the cone projected in left image. &nbsp;&nbsp;
+  <b>Figure 8:</b> LiDAR pointcloud of the cone projected in right image.
+</p>
+
 ![6D pose estimation of the left cone](images/synchronized_vimba_038_image_sync_pose_estimation_1.png)
 ![6D pose estimation of the left cone](images/synchronized_vimba_039_image_sync_pose_estimation_1.png)
