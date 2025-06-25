@@ -19,12 +19,17 @@ The repository is structured such that:
 - **requirements** contains necessary packages
 
 ### Results obtained in autonomous driving dataset
-<figure>
-  <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="500"/>
+
+<p align="center">
+  <figure style="display:inline-block; margin-right: 20px;">
+   <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="500"/>
   <figcaption>Figure 1: Left camera frame.</figcaption>
-  <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width="500"/>
+  </figure>
+  <figure style="display:inline-block;">
+    <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width="500"/>
   <figcaption>Figure 2: Right camera frame.</figcaption>
-</figure>
+  </figure>
+</p>
 
 <figure>
   <img src="images/vimba_038_image_sync_YOLO.jpg" alt="Left camera frame processed by YOLO" width="500"/>
