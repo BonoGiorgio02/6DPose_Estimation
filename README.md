@@ -1,10 +1,11 @@
-# 6DPose_Estimation ⚠️⚠️ IN PROGRESS ⚠️⚠️
+# 6DPose_Estimation
 To run the code, execute the notebook.
 
 If you want to run with Colab:
+- download repo and store in on Drive
+- extract it
 - open the notebook
-- connect to Drive
-- change working directory to this folder
+- connect to Drive (set ```MOUNT_DRIVE``` to ```True```)
 - follow the notebook
 
 The repository is structured such that:
