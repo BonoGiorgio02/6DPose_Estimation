@@ -1,5 +1,5 @@
 # 6DPose_Estimation
-This project addresses the task of 6D object pose estimation on the LINEMOD preprocessed dataset. 
+This project addresses the task of 6D object pose estimation on the LINEMOD preprocessed dataset.\\
 Moreover, the proposed architecture is trained to detect the pose of cones in a simulator of the student autonomous driving team of Politecnico of Turin Squadra Corse driverless.
 
 ## How to run the code
