@@ -42,14 +42,14 @@ The repository is structured such that:
 
 **Overall:**
 
-| Metric          | Valore  |
+| Metric          | Value   |
 |-----------------|---------|
 | ADD Score       | 0.0138  |
 | Accuracy        | 0.8003  |
 
 **Results by object:**
 
-| Oggetto  | ADD Score | Accuracy | Numero Campioni |
+| Object   | ADD Score | Accuracy | Number of object |
 |----------|-----------|----------|-----------------|
 | 06       | 0.0121    | 0.7966   | 177             |
 | 11       | 0.0056    | 1.0000   | 183             |
