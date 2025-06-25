@@ -32,6 +32,46 @@ The repository is structured such that:
 
 
 
+
+
+
+
+
+
+## Risultati di Valutazione
+
+**Overall:**
+
+| Metric          | Valore  |
+|-----------------|---------|
+| ADD Score       | 0.0138  |
+| Accuracy        | 0.8003  |
+
+**Risultati per oggetto:**
+
+| Oggetto  | ADD Score | Accuracy | Numero Campioni |
+|----------|-----------|----------|-----------------|
+| 06       | 0.0121    | 0.7966   | 177             |
+| 11       | 0.0056    | 1.0000   | 183             |
+| 15       | 0.0160    | 0.8152   | 184             |
+| 01       | 0.0124    | 0.5108   | 186             |
+| 04       | 0.0160    | 0.7000   | 180             |
+| 10       | 0.0058    | 1.0000   | 188             |
+| 09       | 0.0119    | 0.5213   | 188             |
+| 08       | 0.0178    | 0.9045   | 178             |
+| 05       | 0.0168    | 0.8101   | 179             |
+| 14       | 0.0170    | 0.9185   | 184             |
+| 02       | 0.0166    | 0.8956   | 182             |
+| 12       | 0.0150    | 0.5968   | 186             |
+| 13       | 0.0172    | 0.9538   | 173             |
+
+---
+
+**Risultati finali:**  
+- **ADD Score:** 0.0138  
+- **Accuracy:** 0.8003
+
+
 ### Results obtained in autonomous driving dataset
 
 <p align="center">
