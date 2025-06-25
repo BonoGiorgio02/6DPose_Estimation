@@ -31,9 +31,8 @@ class PoseTrainer:
 
         # loss function and optimizer
         self.criterion = PoseLossExtension(alpha=1.0, beta=1.0, class_names=self.class_names)
-        self.optimizer = torch.optim.AdamW(model.parameters(), lr=4.0e-05, weight_decay=1e-5)
-        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max=17, eta_min=1e-6)
-        # self.grad_accum_steps = self.config.get('grad_accum_steps', 8)
+        self.optimizer = torch.optim.AdamW(model.parameters(), lr=1.0e-04, weight_decay=1e-5)
+        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max=100, eta_min=1e-6)
 
         if resume_optimizer and checkpoint is not None:
             self.model.load_state_dict(checkpoint['model_state_dict'])
@@ -78,7 +77,7 @@ class PoseTrainer:
 
             # compute loss (not normalized values)
             loss, r, t= self.criterion(pixel_rotations_norm, pixel_translations, pixel_confidences, gt_trans, gt_rot, obj_id)
-            
+
             loss.backward()
 
             # accumulate loss for statistics
@@ -240,6 +239,36 @@ class PoseTrainer:
                     self.experiment.log_metric("best_val_loss", val_loss)
 
                 print(f'Saved best model with val_loss: {val_loss:.4f}')
+            else:
+                self.current_val_loss = val_loss
+
+                os.makedirs(f"./checkpoints/extension/", exist_ok=True)
+
+                lr = self.optimizer.param_groups[0]['lr']
+                batch_size = self.config.get('batch_size', 32)
+                current_model_path = (
+                    f"./checkpoints/extension/current_{self.config['name_saved_file']}_{self.config['backbone']}" # quaternion
+                    f"_bs{batch_size}.pth"
+                )
+
+                # save the model
+                torch.save({
+                    'epoch': epoch+1,
+                    'model_state_dict': self.model.state_dict(),
+                    'optimizer_state_dict': self.optimizer.state_dict(),
+                    'train_loss': train_loss,
+                    'val_loss': val_loss,
+                    'config': self.config,
+                    'scheduler_state_dict':self.scheduler.state_dict(),
+                    'lr': lr,
+                    'step': self.step
+                }, current_model_path)
+
+                # log model
+                if self.experiment is not None:
+                    self.experiment.log_metric("current_val_loss", val_loss)
+
+                print(f'Saved current model with val_loss: {val_loss:.4f}')
 
         print("Training completed!")
 
