@@ -29,13 +29,45 @@ The repository is structured such that:
 
 ### Results obtained in LINEMOD dataset
 
+<p align="center">
+  <img src="images/download (1).png" alt="Linemod_1" width="350" style="margin-right: 10px;">
+  <img src="images/download (2).png" alt="Linemod_2" width=350">
+</p>
 
+<p align="center">
+  <b>Figure 1:</b> . &nbsp;&nbsp;
+  <b>Figure 2:</b> .
+</p>
 
+<p align="center">
+  <img src="images/download (3).png" alt="Linemod_3" width="350" style="margin-right: 10px;">
+  <img src="images/download (4).png" alt="Linemod_4" width=350">
+</p>
 
+<p align="center">
+  <b>Figure 3:</b> . &nbsp;&nbsp;
+  <b>Figure 4:</b> .
+</p>
 
+<p align="center">
+  <img src="images/download (5).png" alt="Linemod_5" width="350" style="margin-right: 10px;">
+  <img src="images/download (6).png" alt="Linemod_6" width=350">
+</p>
 
+<p align="center">
+  <b>Figure 5:</b> . &nbsp;&nbsp;
+  <b>Figure 6:</b> .
+</p>
 
+<p align="center">
+  <img src="images/download (7).png" alt="Linemod_7" width="350" style="margin-right: 10px;">
+  <img src="images/download (8).png" alt="Linemod_8" width=350">
+</p>
 
+<p align="center">
+  <b>Figure 7:</b> . &nbsp;&nbsp;
+  <b>Figure 8:</b> .
+</p>
 
 
 #### Evaluation results
@@ -45,31 +77,27 @@ The repository is structured such that:
 | Metric          | Value   |
 |-----------------|---------|
 | ADD Score       | 0.0138  |
-| Accuracy        | 0.8003  |
+| Accuracy        | 80.03%  |
 
 **Results by object:**
 
 | Object   | ADD Score | Accuracy | Number of object |
 |----------|-----------|----------|-----------------|
-| 06       | 0.0121    | 0.7966   | 177             |
-| 11       | 0.0056    | 1.0000   | 183             |
-| 15       | 0.0160    | 0.8152   | 184             |
-| 01       | 0.0124    | 0.5108   | 186             |
-| 04       | 0.0160    | 0.7000   | 180             |
-| 10       | 0.0058    | 1.0000   | 188             |
-| 09       | 0.0119    | 0.5213   | 188             |
-| 08       | 0.0178    | 0.9045   | 178             |
-| 05       | 0.0168    | 0.8101   | 179             |
-| 14       | 0.0170    | 0.9185   | 184             |
-| 02       | 0.0166    | 0.8956   | 182             |
-| 12       | 0.0150    | 0.5968   | 186             |
-| 13       | 0.0172    | 0.9538   | 173             |
+| 06       | 0.0121    | 79.66%   | 177             |
+| 11       | 0.0056    | 100.0%   | 183             |
+| 15       | 0.0160    | 81.52%   | 184             |
+| 01       | 0.0124    | 51.08%   | 186             |
+| 04       | 0.0160    | 70.00%   | 180             |
+| 10       | 0.0058    | 100.0%   | 188             |
+| 09       | 0.0119    | 52.13%   | 188             |
+| 08       | 0.0178    | 90.45%   | 178             |
+| 05       | 0.0168    | 81.01%   | 179             |
+| 14       | 0.0170    | 91.85%   | 184             |
+| 02       | 0.0166    | 89.56%   | 182             |
+| 12       | 0.0150    | 59.68%   | 186             |
+| 13       | 0.0172    | 95.38%   | 173             |
 
 ---
-
-**Risultati finali:**  
-- **ADD Score:** 0.0138  
-- **Accuracy:** 0.8003
 
 
 ### Results obtained in autonomous driving dataset
