@@ -67,5 +67,5 @@ The repository is structured such that:
 
 <p align="center">
   <b>Figure 9:</b> 6D pose estimation of the left cone. &nbsp;&nbsp;
-  <b>Figure 10:</b> 6D pose estimation of the left cone.
+  <b>Figure 10:</b> 6D pose estimation of the right cone.
 </p>
