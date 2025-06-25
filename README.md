@@ -21,8 +21,8 @@ The repository is structured such that:
 ### Results obtained in autonomous driving dataset
 
 <p align="center">
-  <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="450" style="margin-right: 10px;">
-  <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width=450">
+  <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="300" style="margin-right: 10px;">
+  <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width=300">
 </p>
 
 <p align="center">
@@ -31,8 +31,8 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <img src="images/vimba_038_image_sync_YOLO.jpg" alt="Left camera frame processed by YOLO" width="450" style="margin-right: 10px;">
-  <img src="images/vimba_039_image_sync_YOLO.jpg" alt="Right camera frame processed by YOLO" width=450">
+  <img src="images/vimba_038_image_sync_YOLO.jpg" alt="Left camera frame processed by YOLO" width="300" style="margin-right: 10px;">
+  <img src="images/vimba_039_image_sync_YOLO.jpg" alt="Right camera frame processed by YOLO" width=300">
 </p>
 
 <p align="center">
@@ -51,8 +51,8 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <img src="images/pointcloud_projection_result.png" alt="LiDAR pointcloud of the cone projected in left image" width="450" style="margin-right: 10px;">
-  <img src="images/pointcloud_projection_result_039.png" alt="LiDAR pointcloud of the cone projected in right image" width=450">
+  <img src="images/pointcloud_projection_result.png" alt="LiDAR pointcloud of the cone projected in left image" width="300" style="margin-right: 10px;">
+  <img src="images/pointcloud_projection_result_039.png" alt="LiDAR pointcloud of the cone projected in right image" width=300">
 </p>
 
 <p align="center">
@@ -61,8 +61,8 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <img src="images/synchronized_vimba_038_image_sync_pose_estimation_1.png" alt="LiDAR pointcloud of the cone projected in left image" width="450" style="margin-right: 10px;">
-  <img src="images/synchronized_vimba_039_image_sync_pose_estimation_1.png" alt="LiDAR pointcloud of the cone projected in right image" width=450">
+  <img src="images/synchronized_vimba_038_image_sync_pose_estimation_1.png" alt="LiDAR pointcloud of the cone projected in left image" width="300" style="margin-right: 10px;">
+  <img src="images/synchronized_vimba_039_image_sync_pose_estimation_1.png" alt="LiDAR pointcloud of the cone projected in right image" width=300">
 </p>
 
 <p align="center">
