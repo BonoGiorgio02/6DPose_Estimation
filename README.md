@@ -60,5 +60,12 @@ The repository is structured such that:
   <b>Figure 8:</b> LiDAR pointcloud of the cone projected in right image.
 </p>
 
-![6D pose estimation of the left cone](images/synchronized_vimba_038_image_sync_pose_estimation_1.png)
-![6D pose estimation of the left cone](images/synchronized_vimba_039_image_sync_pose_estimation_1.png)
+<p align="center">
+  <img src="images/synchronized_vimba_038_image_sync_pose_estimation_1.png" alt="LiDAR pointcloud of the cone projected in left image" width="450" style="margin-right: 10px;">
+  <img src="images/synchronized_vimba_039_image_sync_pose_estimation_1.png" alt="LiDAR pointcloud of the cone projected in right image" width=450">
+</p>
+
+<p align="center">
+  <b>Figure 9:</b> 6D pose estimation of the left cone. &nbsp;&nbsp;
+  <b>Figure 10:</b> 6D pose estimation of the left cone.
+</p>
