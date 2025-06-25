@@ -22,12 +22,12 @@ The repository is structured such that:
 
 <p align="center">
   <figure style="display:inline-block; margin-right: 20px;">
-   <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="500"/>
-  <figcaption>Figure 1: Left camera frame.</figcaption>
+    <img src="images/vimba_038_image_sync.png" alt="Left camera frame" width="400"/>
+    <figcaption>Figure 1: Left camera frame.</figcaption>
   </figure>
   <figure style="display:inline-block;">
-    <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width="500"/>
-  <figcaption>Figure 2: Right camera frame.</figcaption>
+    <img src="images/vimba_039_image_sync.png" alt="Right camera frame" width="400"/>
+    <figcaption>Figure 2: Right camera frame.</figcaption>
   </figure>
 </p>
 
