@@ -17,3 +17,8 @@ The repository is structured such that:
 - **utils** contains multiple functions (init, data exploration, plot)
 - notebook and associated training logic
 - **requirements** contains necessary packages
+
+![Descrizione immagine](images/vimba_038_image_sync.png)
+![Descrizione immagine](images/best_cone.jpg)
+![Descrizione immagine](images/pointcloud_projection_result.png)
+![Descrizione immagine](images/synchronized_vimba_038_image_sync_pose_estimation_1.png)
