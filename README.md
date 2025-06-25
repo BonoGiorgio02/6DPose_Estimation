@@ -18,7 +18,14 @@ The repository is structured such that:
 - notebook and associated training logic
 - **requirements** contains necessary packages
 
-![Descrizione immagine](images/vimba_038_image_sync.png)
-![Descrizione immagine](images/best_cone.jpg)
-![Descrizione immagine](images/pointcloud_projection_result.png)
-![Descrizione immagine](images/synchronized_vimba_038_image_sync_pose_estimation_1.png)
+### Results obtained in autonomous driving dataset
+![Left camera frame](images/vimba_038_image_sync.png)
+![Right camera frame](images/vimba_039_image_sync.png)
+![Left camera frame processed by YOLO](images/vimba_038_image_sync_YOLO.jpg)
+![Right camera frame processed by YOLO](images/vimba_039_image_sync_YOLO.jpg)
+![Cropped image of left cone](images/best_cone.jpg)
+![Cropped image of right cone](images/best_cone_039.jpg)
+![LiDAR pointcloud of the cone projected in left image](images/pointcloud_projection_result.png)
+![LiDAR pointcloud of the cone projected in right image](images/pointcloud_projection_result_039.png)
+![6D pose estimation of the left cone](images/synchronized_vimba_038_image_sync_pose_estimation_1.png)
+![6D pose estimation of the left cone](images/synchronized_vimba_039_image_sync_pose_estimation_1.png)
