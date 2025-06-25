@@ -37,18 +37,18 @@ The repository is structured such that:
 
 <p align="center">
   <b>Figure 3:</b> Left camera frame processed by YOLO. &nbsp;&nbsp;
-  <b>Figure 2:</b> Right camera frame processed by YOLO.
+  <b>Figure 4:</b> Right camera frame processed by YOLO.
 </p>
 
-<figure>
-  <img src="images/vimba_038_image_sync_YOLO.jpg" alt="Left camera frame processed by YOLO" width="500"/>
-  <figcaption>Figure 3: Left camera frame processed by YOLO.</figcaption>
-</figure>
+<p align="center">
+  <img src="images/best_cone.jpg" alt="Left camera frame processed by YOLO" style="margin-right: 10px;">
+  <img src="images/best_cone_039.jpg" alt="Right camera frame processed by YOLO">
+</p>
 
-<figure>
-  <img src="images/vimba_038_image_sync_YOLO.jpg" alt="Right camera frame processed by YOLO" width="500"/>
-  <figcaption>Figure 4: Right camera frame processed by YOLO.</figcaption>
-</figure>
+<p align="center">
+  <b>Figure 5:</b> Cropped image of left cone. &nbsp;&nbsp;
+  <b>Figure 6:</b> Cropped image of right cone.
+</p>
 
 ![Cropped image of left cone](images/best_cone.jpg)
 ![Cropped image of right cone](images/best_cone_039.jpg)
