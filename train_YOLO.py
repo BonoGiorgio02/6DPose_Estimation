@@ -39,4 +39,4 @@ def train_YOLO(path: str = None, epochs: int = None, batch_size: int = None, dev
         dropout=0.3
         )
     
-    shutil.copy(f"./datasets/linemod/YOLO/runs/detect/train/weights/best.pt", f"./checkpoints/best.pt")
+    shutil.copy(f"./runs/detect/train/weights/best.pt", f"./checkpoints/best.pt")

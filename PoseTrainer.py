@@ -30,7 +30,7 @@ class PoseTrainer:
         self.start_epoch = 0
 
         # loss function and optimizer
-        self.criterion = PoseLossExtension(alpha=1.0, beta=1.0, class_names=self.class_names)
+        self.criterion = PoseLossExtension(alpha=1.0, beta=1.0, class_names=self.class_names, device=self.device)
         self.optimizer = torch.optim.AdamW(model.parameters(), lr=1.0e-04, weight_decay=1e-5)
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max=100, eta_min=1e-6)
 
