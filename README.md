@@ -29,8 +29,8 @@ The repository is structured such that:
 ### Results obtained in LINEMOD dataset
 
 <p align="center">
-  <img src="images/object_.png" alt="Linemod_1" width="350" style="margin-right: 10px;">
-  <img src="images/object_.png" alt="Linemod_2" width=350">
+  <img src="images/object_05.png" alt="Linemod_1" width="350" style="margin-right: 10px;">
+  <img src="images/object_06.png" alt="Linemod_2" width=350">
 </p>
 
 <p align="center">
@@ -39,8 +39,8 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <img src="images/object_.png" alt="Linemod_3" width="350" style="margin-right: 10px;">
-  <img src="images/object_.png" alt="Linemod_4" width=350">
+  <img src="images/object_08.png" alt="Linemod_3" width="350" style="margin-right: 10px;">
+  <img src="images/object_09.png" alt="Linemod_4" width=350">
 </p>
 
 <p align="center">
@@ -49,8 +49,8 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <img src="images/object_.png" alt="Linemod_5" width="350" style="margin-right: 10px;">
-  <img src="images/object_.png" alt="Linemod_6" width=350">
+  <img src="images/object_13.png" alt="Linemod_5" width="350" style="margin-right: 10px;">
+  <img src="images/object_14.png" alt="Linemod_6" width=350">
 </p>
 
 <p align="center">
