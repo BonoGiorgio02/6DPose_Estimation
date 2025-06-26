@@ -29,38 +29,38 @@ The repository is structured such that:
 ### Results obtained in LINEMOD dataset
 
 <p align="center">
-  <img src="images/download (1).png" alt="Linemod_1" width="350" style="margin-right: 10px;">
-  <img src="images/download (2).png" alt="Linemod_2" width=350">
+  <img src="images/object_.png" alt="Linemod_1" width="350" style="margin-right: 10px;">
+  <img src="images/object_.png" alt="Linemod_2" width=350">
 </p>
 
 <p align="center">
-  <b>Figure 1:</b> . &nbsp;&nbsp;
-  <b>Figure 2:</b> .
+  <b>Figure 1:</b> Object . &nbsp;&nbsp;
+  <b>Figure 2:</b> Object .
 </p>
 
 <p align="center">
-  <img src="images/download (3).png" alt="Linemod_3" width="350" style="margin-right: 10px;">
-  <img src="images/download (4).png" alt="Linemod_4" width=350">
+  <img src="images/object_.png" alt="Linemod_3" width="350" style="margin-right: 10px;">
+  <img src="images/object_.png" alt="Linemod_4" width=350">
 </p>
 
 <p align="center">
-  <b>Figure 3:</b> . &nbsp;&nbsp;
-  <b>Figure 4:</b> .
+  <b>Figure 3:</b> Object . &nbsp;&nbsp;
+  <b>Figure 4:</b> Object .
 </p>
 
 <p align="center">
-  <img src="images/download (5).png" alt="Linemod_5" width="350" style="margin-right: 10px;">
-  <img src="images/download (6).png" alt="Linemod_6" width=350">
+  <img src="images/object_.png" alt="Linemod_5" width="350" style="margin-right: 10px;">
+  <img src="images/object_.png" alt="Linemod_6" width=350">
 </p>
 
 <p align="center">
-  <b>Figure 5:</b> . &nbsp;&nbsp;
-  <b>Figure 6:</b> .
+  <b>Figure 5:</b> Object . &nbsp;&nbsp;
+  <b>Figure 6:</b> Object .
 </p>
 
 <p align="center">
-  <img src="images/download (7).png" alt="Linemod_7" width="350" style="margin-right: 10px;">
-  <img src="images/download (8).png" alt="Linemod_8" width=350">
+  <img src="images/object_.png" alt="Linemod_7" width="350" style="margin-right: 10px;">
+  <img src="images/object_.png" alt="Linemod_8" width=350">
 </p>
 
 <p align="center">
