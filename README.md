@@ -34,8 +34,8 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <b>Figure 1:</b> Object . &nbsp;&nbsp;
-  <b>Figure 2:</b> Object .
+  <b>Figure 1:</b> Object 05 . &nbsp;&nbsp;
+  <b>Figure 2:</b> Object 06.
 </p>
 
 <p align="center">
@@ -44,8 +44,8 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <b>Figure 3:</b> Object . &nbsp;&nbsp;
-  <b>Figure 4:</b> Object .
+  <b>Figure 3:</b> Object 08. &nbsp;&nbsp;
+  <b>Figure 4:</b> Object 09.
 </p>
 
 <p align="center">
@@ -54,20 +54,9 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <b>Figure 5:</b> Object . &nbsp;&nbsp;
-  <b>Figure 6:</b> Object .
+  <b>Figure 5:</b> Object 13. &nbsp;&nbsp;
+  <b>Figure 6:</b> Object 14.
 </p>
-
-<p align="center">
-  <img src="images/object_.png" alt="Linemod_7" width="350" style="margin-right: 10px;">
-  <img src="images/object_.png" alt="Linemod_8" width=350">
-</p>
-
-<p align="center">
-  <b>Figure 7:</b> . &nbsp;&nbsp;
-  <b>Figure 8:</b> .
-</p>
-
 
 #### Evaluation results
 
