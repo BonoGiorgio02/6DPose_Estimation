@@ -34,7 +34,7 @@ The repository is structured such that:
 </p>
 
 <p align="center">
-  <b>Figure 1:</b> Object 05 . &nbsp;&nbsp;
+  <b>Figure 1:</b> Object 05. &nbsp;&nbsp;
   <b>Figure 2:</b> Object 06.
 </p>
 
