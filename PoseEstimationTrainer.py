@@ -30,8 +30,8 @@ class PoseEstimationTrainer:
         # loss function and optimizer
         self.criterion = PoseLoss(alpha=1.0, beta=1.0)
         self.optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
-        # self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max= config['num_epochs'], eta_min=1e-6)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=10, gamma=0.1)
+        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max= config['num_epochs'], eta_min=1e-6)
+        # self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=10, gamma=0.1)
 
         # track metrics
         self.train_losses = []

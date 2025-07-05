@@ -32,9 +32,9 @@ class PoseLossExtension(nn.Module):
         """
 
         # gt_rot has shape [batch_size, 3, 3], while pixel_rotations_norm has shape [batch_size, N_valid, 4]
-        total_loss = self.dense_loss(pixel_rotations_norm, pixel_translations, pixel_confidences, gt_trans, gt_rot, obj_id)
+        total_loss, r, t = self.dense_loss(pixel_rotations_norm, pixel_translations, pixel_confidences, gt_trans, gt_rot, obj_id)
 
-        return total_loss
+        return total_loss, r, t
 
     def dense_loss(self, pred_r, pred_t, pred_c, gt_trans, gt_rot, obj_id):
 

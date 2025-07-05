@@ -157,7 +157,7 @@ class PoseTrainer:
                 "val_loss": avg_loss,
                 # "val_trans_loss": avg_trans_loss,
                 # "val_rot_loss": avg_rot_loss,
-                "epoch": len(self.train_losses)+1
+                "epoch": len(self.train_losses)+self.start_epoch
             })
 
         return avg_loss

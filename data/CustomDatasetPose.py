@@ -68,18 +68,14 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         # Define image transformations for the baseline
         if self.split == 'train':
             self.transform_img = transforms.Compose([
-                                # transforms.ColorJitter(brightness=0.3, contrast=0.2, saturation=0.2, hue=0.05),
-                                # transforms.RandomGrayscale(p=0.1),
-                                # transforms.RandomApply([transforms.GaussianBlur(kernel_size=3)], p=0.1),
-                                transforms.ToTensor(),  # convert to float32 and normalize to [0, 1]
+                                transforms.ToTensor(),  # convert to float32
                                 # transforms.Normalize(mean=self.image_mean, std=self.image_std)
                             ])
 
             self.transform_crop = transforms.Compose([
-                                # transforms.ColorJitter(brightness=0.3, contrast=0.2, saturation=0.2, hue=0.05),
-                                # transforms.RandomGrayscale(p=0.1),
-                                # transforms.RandomApply([transforms.GaussianBlur(kernel_size=3)], p=0.1),
-                                transforms.Resize((224, 224)), # such that all images of the batch have same shape
+                                transforms.ColorJitter(brightness=0.3, contrast=0.2, saturation=0.2, hue=0.05),
+                                transforms.RandomGrayscale(p=0.1),
+                                transforms.RandomApply([transforms.GaussianBlur(kernel_size=3)], p=0.1),
                                 transforms.ToTensor(),
                                 # normalize images according to these values found
                                 transforms.Normalize(mean=self.image_mean, std=self.image_std)
@@ -87,11 +83,9 @@ class CustomDatasetPose(Dataset): # used to load and preprocess data
         else:
             self.transform_img = transforms.Compose([
                                 transforms.ToTensor(),
-                                # transforms.Normalize(mean=self.image_mean, std=self.image_std)
                             ])
 
             self.transform_crop = transforms.Compose([
-                                transforms.Resize((224, 224)),
                                 transforms.ToTensor(),
                                 transforms.Normalize(mean=self.image_mean, std=self.image_std)
                             ])
