@@ -11,7 +11,7 @@ class PoseEstimationTrainer:
     """Trainer class for the Pose Estimation model.
     """
 
-    def __init__(self, model, train_loader, val_loader, device=torch.device("cpu"), config=None, experiment=None):
+    def __init__(self, model, train_loader, val_loader, device=torch.device("cpu"), config=None, experiment=None, resume_optimizer=False, checkpoint=None):
         """
 
         Args:
@@ -26,6 +26,7 @@ class PoseEstimationTrainer:
         self.val_loader = val_loader
         self.device = device
         self.config = config or {}
+        self.start_epoch = 0
 
         # loss function and optimizer
         self.criterion = PoseLoss(alpha=1.0, beta=1.0)
@@ -33,11 +34,20 @@ class PoseEstimationTrainer:
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max= config['num_epochs'], eta_min=1e-6)
         # self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=10, gamma=0.1)
 
+        if resume_optimizer and checkpoint is not None:
+            self.model.load_state_dict(checkpoint['model_state_dict'])
+            self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            self.start_epoch = checkpoint.get('epoch', 0)
+            self.best_val_loss = checkpoint.get('val_loss', float('inf'))
+            self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+            self.step = checkpoint.get('step', 0)
+        else:
+            self.best_val_loss = float('inf')
+            self.step=0
+
         # track metrics
         self.train_losses = []
         self.val_losses = []
-        self.best_val_loss = float('inf')
-        self.step = 0
 
         self.experiment = experiment
 
@@ -61,13 +71,14 @@ class PoseEstimationTrainer:
             images = batch['cropped_img']
             gt_trans = batch['translation']
             gt_rot = batch['quaternion'] # ['quaternion'] for quaternion ['rotation']
+            obj_id = batch['obj_id']
 
             # forward pass
             self.optimizer.zero_grad()
             pred_trans, pred_rot = self.model(images)
 
             # compute loss
-            loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot)
+            loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot, obj_id)
 
             # backward pass
             loss.backward()
@@ -127,12 +138,13 @@ class PoseEstimationTrainer:
                 images = batch['cropped_img']
                 gt_trans = batch['translation']
                 gt_rot = batch['quaternion'] # ['quaternion'] for quaternion ['rotation']
+                obj_id = batch["obj_id"]
 
                 # forward pass
                 pred_trans, pred_rot = self.model(images)
 
                 # compute loss
-                loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot)
+                loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot, obj_id)
 
                 total_loss += loss.item()
                 total_trans_loss += trans_loss.item()
@@ -207,7 +219,10 @@ class PoseEstimationTrainer:
                     'optimizer_state_dict': self.optimizer.state_dict(),
                     'train_loss': train_loss,
                     'val_loss': val_loss,
-                    'config': self.config
+                    'config': self.config,
+                    'scheduler_state_dict': self.scheduler.state_dict(),
+                    'lr': lr,
+                    'step': self.step
                 }, best_model_path)
 
                 # log model

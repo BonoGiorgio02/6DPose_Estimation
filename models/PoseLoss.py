@@ -18,7 +18,7 @@ class PoseLoss(nn.Module):
         self.alpha = alpha  # weight for translation loss
         self.beta = beta    # weight for rotation loss
 
-    def forward(self, pred_trans, pred_rot, gt_trans, gt_rot):
+    def forward(self, pred_trans, pred_rot, gt_trans, gt_rot, obj_id=None):
         """Initialize alpha and beta values.
 
           Args:

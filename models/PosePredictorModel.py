@@ -19,25 +19,46 @@ class PosePredictorModel(nn.Module):
         self.feature_extractor = FeatureExtractor(backbone)
         feature_dim = self.feature_extractor.get_feature_dim()
 
-        self.fc_layers = nn.Sequential(
-          nn.Linear(feature_dim, hidden_dim),
-          nn.BatchNorm1d(hidden_dim),
-          nn.ReLU(),
-          nn.Dropout(0.3),
+        self.fc_layers_t = nn.Sequential(
+            nn.Linear(feature_dim, hidden_dim),
+            nn.BatchNorm1d(hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.BatchNorm1d(hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.3),
 
-          nn.Linear(hidden_dim, hidden_dim),
-          nn.BatchNorm1d(hidden_dim),
-          nn.ReLU(),
-          nn.Dropout(0.3),
+            nn.Linear(hidden_dim, hidden_dim // 2),
+            nn.BatchNorm1d(hidden_dim // 2),
+            nn.ReLU(),
+            nn.Dropout(0.3),
 
-          nn.Linear(hidden_dim, hidden_dim // 2), # half the dimension
-          nn.BatchNorm1d(hidden_dim // 2), # the number of features is reduced from previous Linear
-          nn.ReLU(),
-          nn.Dropout(0.3),
+            nn.Linear(hidden_dim // 2, hidden_dim // 4),
+            nn.BatchNorm1d(hidden_dim // 4),
+            nn.ReLU()
+        )
 
-          nn.Linear(hidden_dim // 2, hidden_dim // 4),
-          nn.BatchNorm1d(hidden_dim // 4),
-          nn.ReLU()
+        self.fc_layers_r = nn.Sequential(
+            nn.Linear(feature_dim, hidden_dim),
+            nn.BatchNorm1d(hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.BatchNorm1d(hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+
+            nn.Linear(hidden_dim, hidden_dim // 2),
+            nn.BatchNorm1d(hidden_dim // 2),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+
+            nn.Linear(hidden_dim // 2, hidden_dim // 4),
+            nn.BatchNorm1d(hidden_dim // 4),
+            nn.ReLU()
         )
 
         # Output heads separate for translation and rotation
@@ -48,15 +69,10 @@ class PosePredictorModel(nn.Module):
         # Extract features
         features = self.feature_extractor(x)
 
-        #  FC layers
-        x = self.fc_layers(features)
+        translation = self.translation_head(self.fc_layers_t(features))
+        rotation_flat = self.rotation_head(self.fc_layers_r(features))
 
-        # Predict translation and rotation
-        translation = self.translation_head(x)
-        rotation_flat = self.rotation_head(x)
-
-        # Reshape rotation matrix in 3x3 shape
         batch_size = rotation_flat.size(0)
         rotation = rotation_flat.view(batch_size, 4)
-
+        
         return translation, rotation

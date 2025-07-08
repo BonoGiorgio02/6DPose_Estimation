@@ -75,12 +75,12 @@ class PixelWiseFusionNetwork(nn.Module):
         geometric_features = torch.cat(all_geometric_features, dim=1)  # [B*N, sum(dims)]
 
         level_data = geometric_features_dict['level1']
-        points_3d = level_data['pos']  # all points for all batches [B*N, 3]
+        points_3d = level_data['pos']  # all points for all batch elements [B*N, 3]
         points_batch = level_data['batch']  # batch assignment for each point [B*N]
 
-        # process each batch separately
+        # process each batch element separately
         for b in range(B):
-            # get points belonging to this batch (only 800)
+            # get points belonging to this batch element (only 800)
             batch_mask = points_batch == b
 
             batch_points = points_3d[batch_mask]  # [N_b, 3]

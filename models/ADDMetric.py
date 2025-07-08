@@ -95,11 +95,11 @@ class ADDMetric:
         # Check for NaN values in poses
         if torch.any(torch.isnan(pred_trans)) or torch.any(torch.isnan(pred_rot)):
             print(f"NaN values found in predicted pose in object {object_id}")
-            return torch.nan, False
+            return torch.tensor(torch.nan), False
 
         if torch.any(torch.isnan(gt_trans)) or torch.any(torch.isnan(gt_rot)):
             print(f"NaN values found in ground truth pose in object {object_id}")
-            return torch.nan, False
+            return torch.tensor(torch.nan), False
 
         try:
         # Convert Torch quaternion [w, x, y, z] -> numpy.quaternion(w, x, y, z)
@@ -112,19 +112,19 @@ class ADDMetric:
 
         except Exception as e:
             print(f"Error converting quaternion to rotation matrix for object {object_id}: {e}")
-            return torch.nan, False
+            return torch.tensor(torch.nan), False
 
         # Take 3D model points
         if object_id not in self.models_points_dict:
             print(f"Object with object id {object_id} is not present in models_point_dict")
-            return torch.nan, False
+            return torch.tensor(torch.nan), False
 
         model_points = self.models_points_dict[object_id]  # Shape: (N, 3)
 
         # Ensure proper shapes
         if pred_rot.shape != (3, 3) or gt_rot.shape != (3, 3):
             print(f"Invalid shape for rotation in object {object_id}")
-            return torch.nan, False
+            return torch.tensor(torch.nan), False
 
         try:
             # Transform points with the predicted pose
@@ -137,7 +137,7 @@ class ADDMetric:
             # Check for NaN in transformed points
             if torch.any(torch.isnan(pred_points)) or torch.any(torch.isnan(gt_points)):
                 print(f"NaN values found in transformed points in object {object_id}")
-                return torch.nan, False
+                return torch.tensor(torch.nan), False
 
             # Compute ADD
             if object_id in self.symmetric_objects:
@@ -163,7 +163,7 @@ class ADDMetric:
 
         except Exception as e:
             print(f"Error during ADD computation for object {object_id}")
-            return torch.nan, False
+            return torch.tensor(torch.nan), False
 
     def evaluate_model_with_add(self):
         """Evaluate the model using the ADD metric."""

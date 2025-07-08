@@ -29,10 +29,6 @@ class FeatureExtractor(nn.Module):
         self.backbone = nn.Sequential(*list(self.backbone.children())[:-2])
         self.adaptive_pool = nn.AdaptiveAvgPool2d((1, 1))
 
-        # freeze layers
-        for param in self.backbone.parameters():
-            param.requires_grad = False
-
     def forward(self, x):
         features = self.backbone(x)
         features = self.adaptive_pool(features)
