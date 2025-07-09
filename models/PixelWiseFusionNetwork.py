@@ -63,6 +63,10 @@ class PixelWiseFusionNetwork(nn.Module):
         image_features = self.image_encoder(image)  # [B, 512, H_pad/32, W_pad/32]
         image_features = self.features_reduction(image_features)  # [B, 256, H_pad/32, W_pad/32]
         image_features = F.interpolate(image_features, size=(H, W), mode='bilinear', align_corners=False) # [B, 256, H_pad, W_pad]
+        
+        # masks = batch['masks']  # [B, 1, H_pad, W_pad]
+        # masks_expanded = masks.expand(-1, self.sample_img_features_dim, -1, -1)  # [B, 256, H_pad, W_pad]
+        # image_features = image_features * masks_expanded
 
         # initialize fusion feature maps for each level
         fusion_maps = []

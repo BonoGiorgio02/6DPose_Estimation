@@ -57,12 +57,15 @@ class PoseLossExtension(nn.Module):
         
         # unsqueeze(1) ([batch_size, 1, 3, 3]), repeat(1, N_valid, 1, 1) ([batch_size, N_valid, 3, 3])
         gt_rot = gt_rot.unsqueeze(1).repeat(1, num_p, 1, 1).view(bs * num_p, 3, 3)
+        # gt_rot = gt_rot.unsqueeze(1).expand(-1, num_p, -1, -1).reshape(bs * num_p, 3, 3)
         # unsqueeze(1) ([batch_size, 1, 3]), repeat(1, N_valid, 1) ([batch_size, N_valid, 3])
         gt_trans = gt_trans.unsqueeze(1).repeat(1, num_p, 1).view(bs * num_p, 3)
+        # gt_trans = gt_trans.unsqueeze(1).expand(-1, num_p, -1).reshape(bs * num_p, 3)
         # pred_c ([batch_size*N_valid, 1])
         pred_c = pred_c.view(bs* num_p)
         # models_points ([batch_size, 1, points_loaded, 3]), repeat ([[batch_size, N_valid, points_loaded, 3]])
         model_points = models_point.repeat(1, num_p, 1, 1).view(bs * num_p, self.models_dict['01'].shape[0] , 3)
+        # models_point = models_point.unsqueeze(1).expand(-1, num_p, -1, -1).reshape(bs * num_p, models_point.size(1), 3)
         # predicted points, [batch_size*N_valid, points_loaded, 3] * [batch_size*N_valid, 3, 3] + [batch_size*N_valid, 1, 3]
         pred_points = torch.bmm(model_points, pred_base.transpose(1, 2)) + pred_t.contiguous().view(bs * num_p, 1, 3)
         # ground truth points, [batch_size*N_valid, points_loaded, 3] * [batch_size*N_valid, 3, 3] + [batch_size*N_valid, 1, 3]

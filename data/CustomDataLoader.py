@@ -9,7 +9,8 @@ def pointcloud_collate_fn(batch):
     
     padded_cropped_imgs = []
     paddings = []
-
+    masks = []
+    
     device = set_device()
     
     for item in batch:
@@ -28,7 +29,11 @@ def pointcloud_collate_fn(batch):
         padding = (pad_left, pad_right, pad_top, pad_bottom)
         # pad images by replicating the border pixels
         padded_img = F.pad(img, padding, mode='replicate')
+        # padded_img = F.pad(img, padding, mode='constant', value=0)
         padded_cropped_imgs.append(padded_img)
+        # mask = torch.ones(1, H, W)
+        # mask_padded = F.pad(mask, padding, mode='constant', value=0)
+        # masks.append(mask_padded)
         padding = torch.tensor([pad_left, pad_right, pad_top, pad_bottom])
         paddings.append(padding)
 
@@ -45,6 +50,7 @@ def pointcloud_collate_fn(batch):
         "obj_id": torch.stack([item['obj_id'] for item in batch]).to(device),
         "sample_id": torch.stack([item['sample_id'] for item in batch]).to(device),
         "paddings":torch.stack(paddings).to(device),
+        # "masks": torch.stack(masks).to(device)
     }
 
     return batch_dict
