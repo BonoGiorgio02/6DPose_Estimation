@@ -89,6 +89,7 @@ def pointcloud_collate_fn_baseline(batch):
         "rotation": torch.stack([item['rotation'] for item in batch]).to(device),
         "quaternion": torch.stack([item['quaternion'] for item in batch]).to(device),
         "bbox_base": torch.stack([item['bbox_base'] for item in batch]).to(device),
+        "bbox_YOLO": torch.tensor([item['bbox_YOLO'] for item in batch]).to(device),
         "obj_id": torch.stack([item['obj_id'] for item in batch]).to(device),
         "sample_id": torch.stack([item['sample_id'] for item in batch]).to(device),
         "paddings":torch.stack(paddings).to(device),
