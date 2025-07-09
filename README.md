@@ -9,11 +9,18 @@ Moreover, the proposed architecture is trained to detect the pose of cones in a 
 To run the code, execute the notebook.
 
 If you want to run with Colab:
-- download repo and store in on Drive
+- download repo and store on Drive
 - extract it
 - open the notebook
 - connect to Drive (set ```MOUNT_DRIVE``` to ```True```)
 - follow the notebook step by step
+
+If you want to run locally:
+- you can clone the repo, but you may need to rename all the ```6DPose_Estimation-main``` into ```6DPose_Estimation```
+
+## How to run inference
+- execute all the cells of ```Set up the project```, ```Download dataset```, ```Modify Dataset```, ```Data Exploration```, ```Define CustomDataset```, ```Data Preprocessing for Object Detection Model```, ```Visualize data```
+- execute the inference cell (```Inference Baseline``` or ```Inference Extension```), it uses the test set (it may take a while to create training, validation, and test sets)
 
 The repository is structured such that:
 - **checkpoints** contains saved models
