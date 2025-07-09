@@ -1,1 +1,2 @@
 checkpoints/mse_loss_cosine_mlp_complete_resnet18_bs32.pth filter=lfs diff=lfs merge=lfs -text
+checkpoints/mse_loss_step_no_freeze_augmented_resnet18_bs32.pth filter=lfs diff=lfs merge=lfs -text
