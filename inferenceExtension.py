@@ -134,7 +134,7 @@ def inference_extension(class_names=None, cam_K=None, device=torch.device("cpu")
                     loss, r, t = criterion(pixel_rotations_norm, pixel_translations, pixel_confidences, gt_trans, gt_rot, object_ids)
                     total_time += time.time()-start
 
-                    plotPose(pathImage, gt_trans[0], gt_rot[0], t[0], r[0], experiment=None, camera_intrinsics=cam_K)
+                    # plotPose(pathImage, gt_trans[0], gt_rot[0], t[0], r[0], experiment=None, camera_intrinsics=cam_K)
 
                     pred_pose = (t[0], r[0])
                     gt_pose = (gt_trans[0], gt_rot[0])

@@ -122,7 +122,7 @@ def inference_baseline(class_names=None, cam_K=None, device=torch.device("cpu"),
 
             # pose
             gt_trans = batch['translation']
-            gt_rot = batch['rotation']
+            gt_rot = batch['quaternion']
             object_ids = batch['obj_id']
             obj_id = int(object_ids)
             obj_id = f"{obj_id:02d}"
@@ -132,13 +132,13 @@ def inference_baseline(class_names=None, cam_K=None, device=torch.device("cpu"),
             if obj_id == detected_object_id:
                 with torch.no_grad():
 
-                    translation, rotation = model(batch)
+                    translation, rotation = model(batch["cropped_img"])
                     total_time += time.time()-start
 
                     # compute loss
                     loss = criterion(translation, rotation, gt_trans, gt_rot, object_ids)
 
-                    plotPose(pathImage, gt_trans[0], gt_rot[0], translation[0], rotation[0], experiment=None, camera_intrinsics=cam_K)
+                    # plotPose(pathImage, gt_trans[0], gt_rot[0], translation[0], rotation[0], experiment=None, camera_intrinsics=cam_K)
 
                     pred_pose = (translation[0], rotation[0])
                     gt_pose = (gt_trans[0], gt_rot[0])
