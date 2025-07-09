@@ -69,9 +69,9 @@ The repository is structured such that:
 
 **Overall:**
 
-| Extension         | ADD Score | Accuracy  |
+|     Extension      | ADD Score | Accuracy  |
 |--------------------|-----------|-----------|
-| RGB-D              | 0.0138    | 80.03%    |
+|    RGB-D           | 0.0138    | 80.03%    |
 | YOLO + RGB-D       | 0.0144    | 77.03%    |
 
 **Results by object:**
