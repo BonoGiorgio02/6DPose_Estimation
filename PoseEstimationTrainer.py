@@ -3,6 +3,7 @@ import os
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from models.PoseLoss import PoseLoss
+from models.PoseLossAlternative import PoseLossAlternative
 import comet_ml
 from comet_ml import Experiment
 from comet_ml.integration.pytorch import watch
@@ -30,6 +31,7 @@ class PoseEstimationTrainer:
 
         # loss function and optimizer
         self.criterion = PoseLoss(alpha=1.0, beta=1.0)
+        # self.criterion = PoseLossAlternative(alpha=1.0, beta=1.0)
         self.optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max= config['num_epochs'], eta_min=1e-6)
         # self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=10, gamma=0.1)
@@ -61,8 +63,6 @@ class PoseEstimationTrainer:
         """
         self.model.train()
         total_loss = 0
-        total_trans_loss = 0
-        total_rot_loss = 0
         num_batches = len(self.train_loader)
 
         pbar = tqdm(self.train_loader, desc='Training')
@@ -78,7 +78,7 @@ class PoseEstimationTrainer:
             pred_trans, pred_rot = self.model(images)
 
             # compute loss
-            loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot, obj_id)
+            loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot, obj_id)
 
             # backward pass
             loss.backward()
@@ -88,8 +88,6 @@ class PoseEstimationTrainer:
 
             # update metric
             total_loss += loss.item()
-            total_trans_loss += trans_loss.item()
-            total_rot_loss += rot_loss.item()
 
             # log batch metrics
             if batch_idx %20 ==0:
@@ -97,8 +95,6 @@ class PoseEstimationTrainer:
                 if self.experiment is not None:
                     self.experiment.log_metrics({
                         "batch_loss": loss.item(),
-                        "batch_trans_loss": trans_loss.item(),
-                        "batch_rot_loss": rot_loss.item(),
                         "learning_rate": self.optimizer.param_groups[0]['lr'],
                         "step": self.step
                     })
@@ -108,16 +104,12 @@ class PoseEstimationTrainer:
             # update progress bar
             pbar.set_postfix({
                 'Loss': f'{loss.item():.4f}',
-                'Trans': f'{trans_loss.item():.4f}',
-                'Rot': f'{rot_loss.item():.4f}',
                 'LR': f'{self.optimizer.param_groups[0]["lr"]:.2e}'
             })
 
         avg_loss = total_loss / num_batches
-        avg_trans_loss = total_trans_loss / num_batches
-        avg_rot_loss = total_rot_loss / num_batches
 
-        return avg_loss, avg_trans_loss, avg_rot_loss
+        return avg_loss
 
     def validate(self):
         """Validate the model on the validation set after each epoch.
@@ -129,8 +121,6 @@ class PoseEstimationTrainer:
         """
         self.model.eval()
         total_loss = 0
-        total_trans_loss = 0
-        total_rot_loss = 0
         num_batches = len(self.val_loader)
 
         with torch.no_grad():
@@ -144,17 +134,13 @@ class PoseEstimationTrainer:
                 pred_trans, pred_rot = self.model(images)
 
                 # compute loss
-                loss, trans_loss, rot_loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot, obj_id)
+                loss = self.criterion(pred_trans, pred_rot, gt_trans, gt_rot, obj_id)
 
                 total_loss += loss.item()
-                total_trans_loss += trans_loss.item()
-                total_rot_loss += rot_loss.item()
 
         avg_loss = total_loss / num_batches
-        avg_trans_loss = total_trans_loss / num_batches
-        avg_rot_loss = total_rot_loss / num_batches
 
-        return avg_loss, avg_trans_loss, avg_rot_loss
+        return avg_loss
 
     def train(self, num_epochs):
         """Train the model for the specified number of epochs.
@@ -172,10 +158,10 @@ class PoseEstimationTrainer:
             print(f'\nEpoch {epoch+1}/{num_epochs}')
 
             # training
-            train_loss, train_trans_loss, train_rot_loss = self.train_epoch()
+            train_loss = self.train_epoch()
 
             # validation
-            val_loss, val_trans_loss, val_rot_loss = self.validate()
+            val_loss = self.validate()
 
             # scheduler step
             self.scheduler.step()
@@ -189,15 +175,8 @@ class PoseEstimationTrainer:
                 self.experiment.log_metrics({
                     "epoch": epoch + 1,
                     "train_loss": train_loss,
-                    "train_trans_loss": train_trans_loss,
-                    "train_rot_loss": train_rot_loss,
                     "val_loss": val_loss,
-                    "val_trans_loss": val_trans_loss,
-                    "val_rot_loss": val_rot_loss,
                 })
-
-            print(f'Train Loss: {train_loss:.4f} (Trans: {train_trans_loss:.4f}, Rot: {train_rot_loss:.4f})')
-            print(f'Val Loss: {val_loss:.4f} (Trans: {val_trans_loss:.4f}, Rot: {val_rot_loss:.4f})')
 
             # save best model
             if val_loss < self.best_val_loss:

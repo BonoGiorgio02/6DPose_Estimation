@@ -136,7 +136,7 @@ def inference_baseline(class_names=None, cam_K=None, device=torch.device("cpu"),
                     total_time += time.time()-start
 
                     # compute loss
-                    loss, trans_loss, rot_loss = criterion(translation, rotation, gt_trans, gt_rot, object_ids)
+                    loss = criterion(translation, rotation, gt_trans, gt_rot, object_ids)
 
                     plotPose(pathImage, gt_trans[0], gt_rot[0], translation[0], rotation[0], experiment=None, camera_intrinsics=cam_K)
 

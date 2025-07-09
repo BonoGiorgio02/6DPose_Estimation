@@ -37,7 +37,7 @@ class PoseLoss(nn.Module):
         # Total Loss
         total_loss = self.alpha * trans_loss + self.beta * rot_loss
 
-        return total_loss, trans_loss, rot_loss
+        return total_loss
 
     def quaternion_loss(self, pred_q, gt_q):
         pred_q = F.normalize(pred_q, dim=-1)
