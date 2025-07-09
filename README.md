@@ -69,10 +69,10 @@ The repository is structured such that:
 
 **Overall:**
 
-| Metric    | Value  |
-| --------- | ------ |
-| ADD Score | 0.0138 |
-| Accuracy  | 80.03% |
+| Extension         | ADD Score | Accuracy  |
+|--------------------|-----------|-----------|
+| RGB-D              | 0.0138    | 80.03%    |
+| YOLO + RGB-D       | 0.0144    | 77.03%    |
 
 **Results by object:**
 
