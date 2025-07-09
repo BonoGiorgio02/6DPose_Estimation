@@ -182,12 +182,12 @@ class PoseEstimationTrainer:
             if val_loss < self.best_val_loss:
                 self.best_val_loss = val_loss
 
-                os.makedirs(f"./checkpoints/baseline/", exist_ok=True)
+                os.makedirs(f"./checkpoints/", exist_ok=True)
 
                 lr = self.optimizer.param_groups[0]['lr']
                 batch_size = self.config.get('batch_size', 32)
                 best_model_path = (
-                    f"./checkpoints/baseline/{self.config['name_saved_file']}_{self.config['backbone']}" # quaternion
+                    f"./checkpoints/{self.config['name_saved_file']}_{self.config['backbone']}" # quaternion
                     f"_bs{batch_size}.pth"
                 )
 

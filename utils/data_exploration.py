@@ -202,7 +202,7 @@ def plot_batch_data(train_loader, val_loader, test_loader):
     obj_ids = batch["obj_id"]         # (B,)
 
     # Convert to numpy and rearrange channels
-    rgb_images = rgb_images.permute(0, 2, 3, 1).numpy()  # (B, H, W, 3)
+    rgb_images = rgb_images.permute(0, 2, 3, 1).to(torch.device("cpu")).numpy()  # (B, H, W, 3)
     bboxes = bboxes.to(torch.device("cpu")).numpy()
     obj_ids = obj_ids.to(torch.device("cpu")).numpy()
 

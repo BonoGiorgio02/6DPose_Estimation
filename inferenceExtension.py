@@ -29,7 +29,7 @@ def inference_extension(class_names=None, cam_K=None, device=torch.device("cpu")
 
     config = {
         "project_name": "pointnet",
-        "experiment_name": "final_dense_fusion_run_changed_rotation",
+        "experiment_name": "HiG",
         "batch_size": 16,
         "num_epochs": 17,
         "learning_rate": 4.0e-05,
@@ -41,7 +41,7 @@ def inference_extension(class_names=None, cam_K=None, device=torch.device("cpu")
         "beta": 1.0,
         "add_threshold": 0.1,
         "symmetric_objects": ["10","11"],
-        "name_saved_file": "final_dense_fusion_run_changed_rotation",
+        "name_saved_file": "HiG",
         "geometric_dims" : [64,128,256],
         "fusion_dim" : 128,
         "num_run_plotPose": 1
@@ -93,8 +93,8 @@ def inference_extension(class_names=None, cam_K=None, device=torch.device("cpu")
             # crop image (resized and normalized)
             cropped_img = test_dataset.load_cropped_image(pathImage,tuple(box.tolist()))
             _, H, W = cropped_img.shape
-            pad_H = round(H*0.4)
-            pad_W = round(W*0.4)
+            pad_H = round(H*1.0)
+            pad_W = round(W*1.0)
 
             # compute symmetric padding: (left, right, top, bottom)
             pad_left = pad_W // 2 # pad 20% of cropped image

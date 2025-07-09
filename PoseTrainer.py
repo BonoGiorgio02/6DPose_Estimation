@@ -212,13 +212,12 @@ class PoseTrainer:
             if val_loss < self.best_val_loss:
                 self.best_val_loss = val_loss
 
-                os.makedirs(f"./checkpoints/extension/", exist_ok=True)
+                os.makedirs(f"./checkpoints/", exist_ok=True)
 
                 lr = self.optimizer.param_groups[0]['lr']
                 batch_size = self.config.get('batch_size', 32)
                 best_model_path = (
-                    f"./checkpoints/extension/{self.config['name_saved_file']}_{self.config['backbone']}" # quaternion
-                    f"_bs{batch_size}.pth"
+                    f"./checkpoints/HiG_Resnet18_bs16.pth"
                 )
 
                 # save the model
@@ -242,13 +241,12 @@ class PoseTrainer:
             else:
                 self.current_val_loss = val_loss
 
-                os.makedirs(f"./checkpoints/extension/", exist_ok=True)
+                os.makedirs(f"./checkpoints/", exist_ok=True)
 
                 lr = self.optimizer.param_groups[0]['lr']
                 batch_size = self.config.get('batch_size', 32)
                 current_model_path = (
-                    f"./checkpoints/extension/current_{self.config['name_saved_file']}_{self.config['backbone']}" # quaternion
-                    f"_bs{batch_size}.pth"
+                    f"./checkpoints/current_HiG_Resnet18_bs16.pth"
                 )
 
                 # save the model

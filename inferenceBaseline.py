@@ -95,8 +95,8 @@ def inference_baseline(class_names=None, cam_K=None, device=torch.device("cpu"),
             # crop image (resized and normalized)
             cropped_img = test_dataset.load_cropped_image(pathImage,tuple(box.tolist()))
             _, H, W = cropped_img.shape
-            pad_H = round(H*0.4)
-            pad_W = round(W*0.4)
+            pad_H = round(H*1.0)
+            pad_W = round(W*1.0)
 
             # compute symmetric padding: (left, right, top, bottom)
             pad_left = pad_W // 2 # pad 20% of cropped image
